@@ -7,13 +7,25 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import {useNavigation} from '@react-navigation/core';
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState, useEffect } from "react";
-import auth from '../firebase.js'
+import auth from '../firebase.js';
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const auth = getAuth();
+  const navigation = useNavigation();
+  useEffect(()=>{
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user){
+        navigation.navigate("Home")
+      }
+    })
+    return unsubscribe;
+  },[])
+
   const handleSignIn = () => {
     createUserWithEmailAndPassword(auth, email, password) // promise
       .then((userCredentilas) => {
