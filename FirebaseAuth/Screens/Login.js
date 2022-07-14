@@ -1,3 +1,4 @@
+console.disableYellowBox = true;
 import {
   StyleSheet,
   Text,
@@ -17,6 +18,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const auth = getAuth();
   const navigation = useNavigation();
+
   useEffect(()=>{
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user){
